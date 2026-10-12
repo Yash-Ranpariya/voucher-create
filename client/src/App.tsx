@@ -10,7 +10,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    return !window.location.search.includes('nosplash');
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

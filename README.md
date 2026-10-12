@@ -5,8 +5,22 @@ A comprehensive, production-quality, and secure web application that digitizes t
 
 ---
 
-## 📌 GitHub Repository
+## 📌 GitHub Repository & Demo Video
 * **Repository Link**: [https://github.com/Yash-Ranpariya/voucher-create](https://github.com/Yash-Ranpariya/voucher-create)
+* **Demo Video Walkthrough**: [Watch Interactive Demo Walkthrough & Video](https://github.com/Yash-Ranpariya/voucher-create#demo-video-walkthrough)
+* **Submission Presentation PDF**: [`Project_Presentation_and_Submission.pdf`](./Project_Presentation_and_Submission.pdf)
+
+---
+
+## 📸 Application Screenshots
+
+| Role-Based Sign In | Employee Dashboard |
+|:---:|:---:|
+| ![Login Screen](docs/screenshots/01_login.png) | ![Employee Dashboard](docs/screenshots/02_employee_dashboard.png) |
+
+| Director Approval Center | Accounts Monitoring & Reimbursement |
+|:---:|:---:|
+| ![Director Dashboard](docs/screenshots/03_director_dashboard.png) | ![Accounts Hub](docs/screenshots/07_accounts_monitoring.png) |
 
 ---
 
