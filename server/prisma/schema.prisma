@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Enums are removed for SQLite support
+// Role, VoucherCategory, VoucherStatus, ActionType
+
+model User {
+  id                String    @id @default(uuid())
+  name              String
+  email             String    @unique
+  password_hash     String
+  role              String
+  employee_code     String?
+  department        String?
+  signature_url     String?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+
+  employeeVouchers  Voucher[] @relation("EmployeeVouchers")
+  directorVouchers  Voucher[] @relation("DirectorVouchers")
+  notifications     Notification[]
+}
+
+model Voucher {
+  id                     String          @id @default(uuid())
+  voucher_number         String          @unique
+  voucher_date           DateTime
+  expense_date           DateTime
+  department             String
+  title                  String
+  category               String
+  description            String
+  amount                 Float
+  receipt_url            String?
+  status                 String          @default("DRAFT")
+  employee_id            String
+  employee               User            @relation("EmployeeVouchers", fields: [employee_id], references: [id])
+  employee_signature_url String?
+  director_id            String?
+  director               User?           @relation("DirectorVouchers", fields: [director_id], references: [id])
+  director_signature_url String?
+  submitted_at           DateTime?
+  approved_at            DateTime?
+  rejected_at            DateTime?
+  rejection_reason       String?
+  transaction_id         String?
+  paid_at                DateTime?
+  created_at             DateTime        @default(now())
+  updated_at             DateTime        @updatedAt
+
+  activities             VoucherActivity[]
+
+  @@index([employee_id])
+  @@index([status])
+  @@index([expense_date])
+  @@index([voucher_number])
+}
+
+model VoucherActivity {
+  id          String      @id @default(uuid())
+  voucher_id  String
+  voucher     Voucher     @relation(fields: [voucher_id], references: [id])
+  actor_id    String
+  action      String
+  note        String?
+  created_at  DateTime    @default(now())
+}
+
+model VoucherCounter {
+  year        Int         @id
+  last_number Int         @default(0)
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  title       String
+  message     String
+  is_read     Boolean  @default(false)
+  type        String   @default("INFO") // INFO, SUCCESS, WARNING, DANGER
+  link        String?
+  created_at  DateTime @default(now())
+
+  @@index([user_id, is_read])
+}
